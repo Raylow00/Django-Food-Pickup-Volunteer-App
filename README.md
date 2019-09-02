@@ -1,9 +1,9 @@
 # Django-Food-Pickup-Volunteer-App
 A mock volunteer app where volunteers can select which location and which date they are available for various food pickup locations to pickup food surplus and deliver to designated centers
 
-![Image of admin adding new events](https://raylow00.github.com/images/Screenshot_1.png)
-![Image of users registering by date selection](https://raylow00.github.com/images/Screenshot_2.png)
-![Image of events page](https://raylow00.github.com/images/Screenshot_3.png)
+![Image of admin adding new events](https://raylow00.github.com/Django-Food-Pickup-Volunteer-App/images/Screenshot_1.png)
+![Image of users registering by date selection](https://raylow00.github.com/Django-Food-Pickup-Volunteer-App/images/Screenshot_2.png)
+![Image of events page](https://raylow00.github.com/Django-Food-Pickup-Volunteer-App/images/Screenshot_3.png)
 
 Users can:
 - sign up and log in to own account
