@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Sign In
+            </h1>
+
+            <div class="box">
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <h1>Incorrect username or password. Please try again.</h1>
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                                <!--<input type="text" class="input" placeholder="Name">-->
+                                {{ form.username }}
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                                <!--<input type="text" class="input" placeholder="Password">-->
+                                {{ form.password }}
+                        </div>
+                    </div>
+                    <br>
+                    {% else %}
+                    <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                    <!--<input type="text" class="input" placeholder="Name">-->
+                                    {{ form.username }}
+                            </div>
+                        </div>
+                        <br>
+    
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                    <!--<input type="text" class="input" placeholder="Password">-->
+                                    {{ form.password }}
+                            </div>
+                        </div>
+                        <br>
+                        {% endif %}
+
+                    <div class="control">
+                        <p class="subtitle ">
+                            Or sign up <a href="{% url 'signup' %}">here.</a>
+                        </p>
+                    </div>
+                    <br>
+                    
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link" type="submit" value="login">Login</button>
+                        </div>
+                        <div class="control">
+                            <a href="#"><button class="button is-text">Cancel</button></a>
+                        </div>                           
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+        
+
+</body>

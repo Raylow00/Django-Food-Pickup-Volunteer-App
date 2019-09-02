@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update:{{event.name}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">Kechara
+            </a>
+        
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+            
+        {% if user.is_authenticated %}
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                   
+            <a class="navbar-item" href="{% url 'index' %}">
+                Events
+            </a>
+        
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                More
+                </a>
+        
+                <div class="navbar-dropdown">
+                {% if user.is_superuser %}
+                <a class="navbar-item" style="color:black" href="{% url 'addEvent' %}">
+                        Add new event
+                </a>
+                    {% endif %}
+                <a class="navbar-item">
+                    About Kechara
+                </a>
+                <a class="navbar-item">
+                    Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                    Report an issue
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-danger" href="{% url 'profile' %}">{{ user.username }}</a>
+                        <a class="button is-primary" href="{% url 'logout' %}?next=/accounts/login">
+                            <strong>Log out</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            {% else %}
+            <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                <a class="button is-primary">
+                    <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                    Log in
+                </a>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+
+
+
+
+
+
+
+
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Update : {{event.name}}
+      </h1>
+    </div>
+    <br>
+
+    <div class="box">
+        <form method="POST" action="{% url 'update' event.id %}">
+            {% csrf_token %}
+        
+        <div class="field">
+            <label class="label">Event name</label>
+            <div class="control">
+                <input type="text" name="name" class="input" value="{{ event.name }}">
+            </div>
+        </div>
+        
+
+        <div class="field">
+            <label class="label">Event location</label>
+            <div class="control">
+                <input type="text" name="location" class="input" value="{{ event.location }}">
+            </div>
+        </div>
+
+        <div class="field">
+                <label class="label">Event address</label>
+                <div class="control">
+                    <input type="text" name="address" class="input" value="{{ event.address }}">
+                </div>
+        </div>
+
+        <div class="field">
+                <label class="label">Event days</label>
+                <div class="control">
+                    {{form.details_days}}
+                </div>
+        </div>
+
+        <div class="field">
+                <label class="label">Event time</label>
+                <div class="control">
+                    <input type="text" name="details_time" class="input" value="{{ event.details_time }}">
+                </div>
+        </div>
+
+        <div class="field">
+                <label class="label">Number of volunteers</label>
+                <div class="control">
+                    <input type="text" name="volunteers" class="input" value="{{ event.volunteers }}">
+                </div>
+        </div>
+
+        <div class="field">
+                <label class="label">PIN number</label>
+                <div class="control">
+                    <input id="pin" type="text" name="pin" class="input" value="{{ event.pin }}">
+                </div>
+        </div>
+        
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" type="submit">Update</button>
+            </div>
+            <div class="control">
+                <a href="{% url 'index' %}"><button class="button is-text">Cancel</button></a>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <div class="container">
+        <div class="control">
+                <button class="button is-link" onclick="generate()">Generate PIN number</button>
+        </div>
+    </div>
+        
+
+  </section>
+
+  <script>
+      function generate(){
+          var random = Math.floor(100000 + Math.random() * 900000)
+          var pin = document.querySelector("#pin");
+          pin.value = random;
+          pin.textContent = random;
+      }
+  
+  
+  </script>
+
+
+
+  </body>
+</html>

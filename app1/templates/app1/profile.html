@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">Kechara
+            </a>
+        
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+            
+        {% if user.is_authenticated %}
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                    
+            <a class="navbar-item" href="{% url 'index' %}">
+                Events
+            </a>
+        
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                More
+                </a>
+        
+                <div class="navbar-dropdown">
+                {% if user.is_superuser %}
+                <a class="navbar-item">
+                        Add new event
+                </a>
+                {% endif %}
+                <a class="navbar-item">
+                    About Kechara
+                </a>
+                <a class="navbar-item">
+                    Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                    Report an issue
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-danger" href="#">{{ user.username }}</a>
+                            <a class="button is-primary" href="{% url 'logout' %}?next=/accounts/login">
+                                <strong>Log out</strong>
+                            </a>
+                         </div>
+                     </div>
+            </div>
+        
+            {% else %}
+            <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                <a class="button is-primary">
+                    <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                    Log in
+                </a>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </nav>
+
+
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+            Registered events
+      </h1>
+    </div>
+    <br>
+
+    <div class="container">
+            {% for event in upcomingEvents %}
+        <div class="card">
+            <div class="card-content">
+                    <p class="title">
+                        {{ event.event }}
+                    </p>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="tags are-medium has-addons">
+                                    <span class="tag is-dark">Date</span>
+                                    <span class="tag is-primary">{{ event.date }}</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags are-medium has-addons">
+                                    <span class="tag is-dark">Location</span>
+                                    <span class="tag is-primary">{{ event.event.location }}</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags are-medium has-addons">
+                                    <span class="tag is-dark">Address</span>
+                                    <span class="tag is-primary">{{ event.event.address }}</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <form method="POST" action="{% url 'markComplete' id=event.event_id username=user.username %}">
+                                {% csrf_token %}
+                                <h1 class="label has-text-white">Enter the PIN number to mark complete</h1>
+                                <input class="input" name="pin" type="text">
+                                <div class="control has-text-centered">
+                                    <br>
+                                    <button class="button is-success" href="{% url 'markComplete' id=event.event_id username=user.username %}">Done</button>
+                                </div>
+                            </form>
+                        </div>
+                        <button class="modal-close is-large" aria-label="close"></button>
+                      </div>
+                        
+
+                    <div class="buttons is-right">
+                        <a class="button is-medium is-primary" href="{% url 'delete' event.id %}">
+                            Delete
+                        </a>  
+                        <a id="open-modal" class="button is-medium is-primary" onclick="openModal()">
+                            Mark as complete
+                        </a>      
+                    </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+
+    <div class="container">
+            <h1 class="title">
+                    Completed Events
+            </h1>
+        <div class="card">
+            {% if completedEvents < 1 %}
+                <div class="container">
+                    <div class="control">
+                        <p class="title">There are no completed events yet.</p>
+                    </div>
+                </div>
+            {% else %}
+                {% for completed in completedEvents %}
+                    <div class="card-content">
+                        <p class="title">
+                            {{ completed.event }}
+                        </p>
+                        <div class="field is-grouped is-grouped-multiline">
+                            <div class="control">
+                                <div class="tags are-medium has-addons">
+                                        <span class="tag is-dark">Date</span>
+                                        <span class="tag is-primary">{{ completed.date }}</span>
+                                </div>
+                            </div>
+                            <div class="control">
+                                    <div class="tags are-medium has-addons">
+                                            <span class="tag is-dark">Location</span>
+                                            <span class="tag is-primary">{{ completed.event.location }}</span>
+                                    </div>
+                            </div>
+                            <div class="control">
+                                <div class="tags are-medium has-addons">
+                                        <span class="tag is-dark">Address</span>
+                                        <span class="tag is-primary">{{ completed.event.address }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+  </section>
+  <script>
+      function openModal(){
+        var modal = document.querySelector(".modal");
+        modal.classList.add('is-active');
+
+        modal.querySelector('.modal-background').addEventListener('click', function(e){
+            e.preventDefault();
+            modal.classList.remove('is-active');
+        })
+      }
+  
+  
+  </script>
+
+
+  </body>
+</html>

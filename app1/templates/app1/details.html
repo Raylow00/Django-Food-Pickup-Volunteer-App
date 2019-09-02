@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">Kechara
+            </a>
+        
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+            
+        {% if user.is_authenticated %}
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                    
+            <a class="navbar-item" href="{% url 'index' %}">
+                Events
+            </a>
+        
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                More
+                </a>
+        
+                <div class="navbar-dropdown">
+                {% if user.is_superuser %}
+                <a class="navbar-item">
+                        Add new event
+                </a>
+                {% endif %}
+                <a class="navbar-item">
+                    About Kechara
+                </a>
+                <a class="navbar-item">
+                    Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                    Report an issue
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-danger" href="{% url 'profile' %}">{{ user.username }}</a>
+                            <a class="button is-primary" href="{% url 'logout' %}?next=/accounts/login">
+                                <strong>Log out</strong>
+                            </a>
+                         </div>
+                     </div>
+            </div>
+        
+            {% else %}
+            <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                <a class="button is-primary">
+                    <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                    Log in
+                </a>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </nav>
+
+
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+            {{details.name}}
+      </h1>
+    </div>
+    <br>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <div class="tags is-centered">
+                    <span class="tag is-success is-large">Number of volunteers: {{details.volunteers}}</span>
+                </div>
+                
+                    <table class="table is-hoverable is-fullwidth is-bordered">
+                            <thead>
+                                <tr>
+                                    <tbody>
+                                        <th><p class="subtitle is-4">Full address:</p></th>
+                                        <td><p class="subtitle is-4">{{details.address}}</p></td>
+                                    </tbody>
+                                </tr>
+                                <tr>
+                                    <tbody>
+                                        <th><p class="subtitle is-4">Days:</p></th>
+                                        <td><p class="subtitle is-4">{{details.details_days}}</p></td>
+                                    </tbody>
+                                </tr>
+                                <tr>
+                                    <tbody>
+                                        <th><p class="subtitle is-4">Time:</p></th>
+                                        <td><p class="subtitle is-4">{{details.details_time}}</p></td>
+                                    </tbody>
+                                </tr>
+                            </thead>
+                        </table>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    
+
+
+    <div class="container">
+        <div class="buttons is-centered">
+        <a class="button is-primary is-rounded is-large" href="{% url 'form' details.id %}">Register</a>
+        </div>
+    </div>
+
+  </section>
+
+
+  </body>
+</html>

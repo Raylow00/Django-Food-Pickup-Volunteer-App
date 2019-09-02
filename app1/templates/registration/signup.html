@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Sign up as a volunteer!
+            </h1>
+
+            <div class="box">
+                <form method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+
+                    {{form.as_p}}
+
+
+
+
+
+
+
+
+
+
+                    <!--<div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                                <input type="text" class="input" placeholder="Enter your username">
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                                <input type="text" class="input" placeholder="Enter a password">
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link">Sign Up</button>
+                        </div>
+                        <div class="control">
+                            <a href="#"><button class="button is-text">Cancel</button></a>
+                        </div>
+                    </div>-->
+
+                    <div class="control">
+                            <button class="button is-link">Sign Up</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+        
+
+</body>
