@@ -185,6 +185,7 @@ def updateEvent(request, id):
     return render(request, 'app1/form_update.html', context)
 
 
+
 @require_POST
 def update(request, id):
     event = Event.objects.get(pk=id)
