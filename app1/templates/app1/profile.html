@@ -91,7 +91,6 @@
       </h1>
     </div>
     <br>
-<<<<<<< HEAD
     <div class="container">
         <form method="POST" action="{% url 'markComplete' user.username %}">
             {% csrf_token %}
@@ -102,45 +101,32 @@
         </form>  
     </div>
     <br>
-=======
 
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
     <div class="container">
             {% for event in upcomingEvents %}
         <div class="card">
             <div class="card-content">
                     <p class="title">
-<<<<<<< HEAD
                         {{ event.key }}
-=======
-                        {{ event.event }}
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
                     </p>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Date</span>
-<<<<<<< HEAD
                                     <span class="tag is-primary">{{ event.date|date:'Y M d' }}</span>
-=======
-                                    <span class="tag is-primary">{{ event.date }}</span>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
+
                             </div>
                         </div>
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Location</span>
-<<<<<<< HEAD
                                     <span class="tag is-primary">{{ event.key.location }}</span>
-=======
-                                    <span class="tag is-primary">{{ event.event.location }}</span>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
+
                             </div>
                         </div>
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Address</span>
-<<<<<<< HEAD
                                     <span class="tag is-primary">{{ event.key.address }}</span>
                             </div>
                         </div>                        
@@ -155,39 +141,7 @@
                     </div>
                      
                 </div>
-=======
-                                    <span class="tag is-primary">{{ event.event.address }}</span>
-                            </div>
-                        </div>
-                        
-                    </div>
 
-                    <div class="modal">
-                        <div class="modal-background"></div>
-                        <div class="modal-content">
-                            <form method="POST" action="{% url 'markComplete' id=event.event_id username=user.username %}">
-                                {% csrf_token %}
-                                <h1 class="label has-text-white">Enter the PIN number to mark complete</h1>
-                                <input class="input" name="pin" type="text">
-                                <div class="control has-text-centered">
-                                    <br>
-                                    <button class="button is-success" href="{% url 'markComplete' id=event.event_id username=user.username %}">Done</button>
-                                </div>
-                            </form>
-                        </div>
-                        <button class="modal-close is-large" aria-label="close"></button>
-                      </div>
-                        
-
-                    <div class="buttons is-right">
-                        <a class="button is-medium is-primary" href="{% url 'delete' event.id %}">
-                            Delete
-                        </a>  
-                        <a id="open-modal" class="button is-medium is-primary" onclick="openModal()">
-                            Mark as complete
-                        </a>      
-                    </div>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
             </div>
         </div>
         {% endfor %}
@@ -198,10 +152,7 @@
             <h1 class="title">
                     Completed Events
             </h1>
-<<<<<<< HEAD
-=======
-        <div class="card">
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
+
             {% if completedEvents < 1 %}
                 <div class="container">
                     <div class="control">
@@ -210,16 +161,11 @@
                 </div>
             {% else %}
                 {% for completed in completedEvents %}
-<<<<<<< HEAD
                 <div class="card">
                     <div class="card-content">
                         <p class="title">
                             {{ completed.key.name }}
-=======
-                    <div class="card-content">
-                        <p class="title">
-                            {{ completed.event }}
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
+
                         </p>
                         <div class="field is-grouped is-grouped-multiline">
                             <div class="control">
@@ -231,21 +177,13 @@
                             <div class="control">
                                     <div class="tags are-medium has-addons">
                                             <span class="tag is-dark">Location</span>
-<<<<<<< HEAD
                                             <span class="tag is-primary">{{ completed.key.location }}</span>
-=======
-                                            <span class="tag is-primary">{{ completed.event.location }}</span>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
                                     </div>
                             </div>
                             <div class="control">
                                 <div class="tags are-medium has-addons">
                                         <span class="tag is-dark">Address</span>
-<<<<<<< HEAD
                                         <span class="tag is-primary">{{ completed.key.address }}</span>
-=======
-                                        <span class="tag is-primary">{{ completed.event.address }}</span>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
                                 </div>
                             </div>
                         </div>
@@ -257,23 +195,7 @@
 
 
   </section>
-<<<<<<< HEAD
 
-=======
-  <script>
-      function openModal(){
-        var modal = document.querySelector(".modal");
-        modal.classList.add('is-active');
-
-        modal.querySelector('.modal-background').addEventListener('click', function(e){
-            e.preventDefault();
-            modal.classList.remove('is-active');
-        })
-      }
-  
-  
-  </script>
->>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
 
 
   </body>
