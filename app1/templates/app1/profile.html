@@ -92,60 +92,54 @@
     </div>
     <br>
 
+    <div class="fields has-addons">
+        <form method="POST" action="{% url 'markComplete' user.username %}">
+            {% csrf_token %}
+                <div class="control">
+                    <input class="input" name="data" type="text"/>
+                    <a type="submit" class="button is-success is-centered">Mark complete</a>
+                </div>
+        </form>  
+    </div> 
+
+
     <div class="container">
             {% for event in upcomingEvents %}
         <div class="card">
             <div class="card-content">
                     <p class="title">
-                        {{ event.event }}
+                        {{ event.key }}
                     </p>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Date</span>
-                                    <span class="tag is-primary">{{ event.date }}</span>
+                                    <span class="tag is-primary">{{ event.date|date:'Y M d' }}</span>
                             </div>
                         </div>
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Location</span>
-                                    <span class="tag is-primary">{{ event.event.location }}</span>
+                                    <span class="tag is-primary">{{ event.key.location }}</span>
                             </div>
                         </div>
                         <div class="control">
                             <div class="tags are-medium has-addons">
                                     <span class="tag is-dark">Address</span>
-                                    <span class="tag is-primary">{{ event.event.address }}</span>
+                                    <span class="tag is-primary">{{ event.key.address }}</span>
                             </div>
-                        </div>
-                        
+                        </div>                        
                     </div>
 
-                    <div class="modal">
-                        <div class="modal-background"></div>
-                        <div class="modal-content">
-                            <form method="POST" action="{% url 'markComplete' id=event.event_id username=user.username %}">
-                                {% csrf_token %}
-                                <h1 class="label has-text-white">Enter the PIN number to mark complete</h1>
-                                <input class="input" name="pin" type="text">
-                                <div class="control has-text-centered">
-                                    <br>
-                                    <button class="button is-success" href="{% url 'markComplete' id=event.event_id username=user.username %}">Done</button>
-                                </div>
-                            </form>
-                        </div>
-                        <button class="modal-close is-large" aria-label="close"></button>
-                      </div>
-                        
 
-                    <div class="buttons is-right">
+                <div class="buttons is-right">
+                    <div class="control">
                         <a class="button is-medium is-primary" href="{% url 'delete' event.id %}">
-                            Delete
-                        </a>  
-                        <a id="open-modal" class="button is-medium is-primary" onclick="openModal()">
-                            Mark as complete
-                        </a>      
+                                Delete
+                        </a> 
                     </div>
+                     
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -197,19 +191,7 @@
 
 
   </section>
-  <script>
-      function openModal(){
-        var modal = document.querySelector(".modal");
-        modal.classList.add('is-active');
 
-        modal.querySelector('.modal-background').addEventListener('click', function(e){
-            e.preventDefault();
-            modal.classList.remove('is-active');
-        })
-      }
-  
-  
-  </script>
 
 
   </body>

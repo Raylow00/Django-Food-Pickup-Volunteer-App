@@ -17,5 +17,5 @@ urlpatterns = [
     path('deleteEvent/<id>', views.deleteEvent, name='deleteEvent'),
     path('updateEvent/<id>', views.updateEvent, name='updateEvent'),
     path('update/<id>', views.update, name='update'),
-    path('complete/<id>/<username>', views.markComplete, name='markComplete'),
+    path('complete/<username>', views.markComplete, name='markComplete'),
 ]

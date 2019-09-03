@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_POST
 from .forms import RegistrationForm, addEventForm
 from .models import User, Event, Registration
+from datetime import date
+from django.contrib import messages
 
 def signup(request):
 
@@ -91,8 +93,9 @@ def register(request, event_name):
         new_register.save()
         event.volunteers = event.volunteers - 1
         event.save()
-    return redirect('profile')
-
+        return redirect('profile')
+    else:
+        raise ValueError('There is an error registering you')
 
 
 
@@ -206,16 +209,21 @@ def update(request, id):
             return redirect('index')
 
 
+@require_POST
+def markComplete(request, username):
+    if request.method == 'POST':
 
-def markComplete(request, id, username):
-    event = Event.objects.get(pk=id)
-    pin = int(event.pin)
-    data = request.POST.copy()
-    pin2 = int(data.get('pin'))
-    user = Registration.objects.get(user=username, event_id=id)
-    if pin == pin2:
-        user.completed = True
-        user.save()
-        return redirect('profile')
-    else:
-        raise ValueError('This is incorrect')
+        events = Event.objects.all()
+        data = request.POST.copy()
+        pin2 = data.get('data')
+        print(pin2)
+        for event in events:
+            if event.pin is not None:
+                if event.pin == pin2:
+                    user = Registration.objects.get(user=username, key=event)
+                    user.completed = True
+                    user.save()
+                    return redirect('profile')
+        else:
+            raise ValueError('This is incorrect')
+    return render(request, 'app1/index.html')
