@@ -60,5 +60,9 @@ class Event(models.Model):
 class Registration(models.Model):
     user = models.CharField(max_length=100)
     date = models.DateField(default=timezone.now, blank=True, null=True)
+<<<<<<< HEAD
     key = models.ForeignKey(Event, on_delete=models.CASCADE)
+=======
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+>>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
     completed = models.BooleanField(default=False)

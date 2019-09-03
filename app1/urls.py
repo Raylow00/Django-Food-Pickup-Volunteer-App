@@ -17,5 +17,9 @@ urlpatterns = [
     path('deleteEvent/<id>', views.deleteEvent, name='deleteEvent'),
     path('updateEvent/<id>', views.updateEvent, name='updateEvent'),
     path('update/<id>', views.update, name='update'),
+<<<<<<< HEAD
     path('complete/<username>', views.markComplete, name='markComplete'),
+=======
+    path('complete/<id>/<username>', views.markComplete, name='markComplete'),
+>>>>>>> 1e528b7bb12039c904c40d5f9d8a2543b9d79912
 ]
