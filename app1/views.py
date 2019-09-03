@@ -88,7 +88,7 @@ def register(request, event_name):
     if form.is_valid():
         new_register = Registration(
             user=username,
-            event=event, 
+            key=event, 
             date=form.cleaned_data['date'])
         new_register.save()
         event.volunteers = event.volunteers - 1
@@ -188,7 +188,6 @@ def updateEvent(request, id):
     return render(request, 'app1/form_update.html', context)
 
 
-
 @require_POST
 def update(request, id):
     event = Event.objects.get(pk=id)
@@ -209,18 +208,16 @@ def update(request, id):
             return redirect('index')
 
 
-@require_POST
+
 def markComplete(request, username):
     if request.method == 'POST':
-
         events = Event.objects.all()
         data = request.POST.copy()
         pin2 = data.get('data')
-        print(pin2)
         for event in events:
             if event.pin is not None:
-                if event.pin == pin2:
-                    user = Registration.objects.get(user=username, key=event)
+                if int(event.pin) == int(pin2):
+                    user = Registration.objects.get(user=username, key=event, date=date.today())
                     user.completed = True
                     user.save()
                     return redirect('profile')

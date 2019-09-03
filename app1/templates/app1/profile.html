@@ -91,18 +91,16 @@
       </h1>
     </div>
     <br>
-
-    <div class="fields has-addons">
+    <div class="container">
         <form method="POST" action="{% url 'markComplete' user.username %}">
             {% csrf_token %}
-                <div class="control">
-                    <input class="input" name="data" type="text"/>
-                    <a type="submit" class="button is-success is-centered">Mark complete</a>
-                </div>
+            <div class="control">
+                <input class="input" name="data" type="text"/>
+                <button class="button is-success is-centered">Mark complete</a>
+            </div>
         </form>  
-    </div> 
-
-
+    </div>
+    <br>
     <div class="container">
             {% for event in upcomingEvents %}
         <div class="card">
@@ -150,7 +148,6 @@
             <h1 class="title">
                     Completed Events
             </h1>
-        <div class="card">
             {% if completedEvents < 1 %}
                 <div class="container">
                     <div class="control">
@@ -159,9 +156,10 @@
                 </div>
             {% else %}
                 {% for completed in completedEvents %}
+                <div class="card">
                     <div class="card-content">
                         <p class="title">
-                            {{ completed.event }}
+                            {{ completed.key.name }}
                         </p>
                         <div class="field is-grouped is-grouped-multiline">
                             <div class="control">
@@ -173,13 +171,13 @@
                             <div class="control">
                                     <div class="tags are-medium has-addons">
                                             <span class="tag is-dark">Location</span>
-                                            <span class="tag is-primary">{{ completed.event.location }}</span>
+                                            <span class="tag is-primary">{{ completed.key.location }}</span>
                                     </div>
                             </div>
                             <div class="control">
                                 <div class="tags are-medium has-addons">
                                         <span class="tag is-dark">Address</span>
-                                        <span class="tag is-primary">{{ completed.event.address }}</span>
+                                        <span class="tag is-primary">{{ completed.key.address }}</span>
                                 </div>
                             </div>
                         </div>
