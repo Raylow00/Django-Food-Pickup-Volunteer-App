@@ -1,8 +1,7 @@
-from django.forms import ModelForm, Textarea, DateInput, TextInput, IntegerField, SelectMultiple, ChoiceField, EmailField, CharField
+from django.forms import ModelForm, DateInput, TextInput, SelectMultiple, ChoiceField, CharField
 from django.forms import SelectDateWidget
 from app1.models import User, Event, Registration
 from bootstrap_datepicker_plus import DatePickerInput
-from django.contrib.auth.forms import UserCreationForm
 
 '''class UserCreateForm(UserCreationForm):
     class Meta:
@@ -26,10 +25,11 @@ from django.contrib.auth.forms import UserCreationForm
 class RegistrationForm(ModelForm):
     class Meta:
         model = Registration
-        fields = ['date']
+        fields = ['date', 'tagged']
         widgets = {
             'user': TextInput(attrs={'class':'input', 'type':'text', 'placeholder':'Enter your name'}),
             'date': DatePickerInput(format='%Y-%m-%d'),
+            'tagged': TextInput(attrs={'class':'input', 'type':'text', 'placeholder':"Enter your friends' username to tag them. E.g. Tzuyu, Mina, Sana, MOMO, Nayeon"})
             #'pin': TextInput(attrs={'class':'input', 'type':'text', 'placeholder':'PIN number'}),
         }
 
