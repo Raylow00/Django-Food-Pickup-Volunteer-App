@@ -82,7 +82,16 @@
         </div>
     </nav>
 
-
+    {% if message %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                    {{ message }}
+            </h1>
+        </div>
+    </section>
+    
+    {% endif %}
 
   <section class="section">
     <div class="container">
@@ -90,6 +99,8 @@
             Registered events
       </h1>
     </div>
+
+    {% if upcomingEvents %}
     <br>
     <div class="container">
         <form method="POST" action="{% url 'markComplete' user.username %}">
@@ -100,9 +111,11 @@
             </div>
         </form>  
     </div>
+    {% endif %}
     <br>
 
     <div class="container">
+        {% if upcomingEvents %}
             {% for event in upcomingEvents %}
         <div class="card">
             <div class="card-content">
@@ -145,6 +158,13 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+            <div class="container">
+                <div class="control">
+                    <p class="subtitle">There are no registered events. Register for one today!</p>
+                </div>
+            </div>
+        {% endif %}
     </div>
     <br>
 
@@ -153,13 +173,7 @@
                     Completed Events
             </h1>
 
-            {% if completedEvents < 1 %}
-                <div class="container">
-                    <div class="control">
-                        <p class="title">There are no completed events yet.</p>
-                    </div>
-                </div>
-            {% else %}
+            {% if completedEvents %}
                 {% for completed in completedEvents %}
                 <div class="card">
                     <div class="card-content">
@@ -190,6 +204,12 @@
                     </div>
                 </div>
             {% endfor %}
+            {% else %}
+                <div class="container">
+                    <div class="control">
+                        <p class="subtitle">There are no completed events yet.</p>
+                    </div>
+                </div>
         {% endif %}
     </div>
 
