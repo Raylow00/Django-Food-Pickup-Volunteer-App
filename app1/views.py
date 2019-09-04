@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_POST
 from .forms import RegistrationForm, addEventForm
-from .models import User, Event, Registration
+from .models import Event, Registration
 
 
 
@@ -80,24 +81,67 @@ def form(request, details_id):
 @require_POST
 def register(request, event_name):
 
-    username = None
+    #username = None
+    count = 0
 
     event = Event.objects.get(name=event_name)
 
     if request.user.is_authenticated:
-        username = request.user.username
+        USERNAME = request.user.username
     
     form = RegistrationForm(request.POST)
     if form.is_valid():
-        new_register = Registration(
-            user=username,
-            key=event, 
-            event=event, 
-            date=form.cleaned_data['date'])
-        new_register.save()
-        event.volunteers = event.volunteers - 1
-        event.save()
-        return redirect('profile')
+        try:
+            tagged_ = form.cleaned_data['tagged']
+            if tagged_ is not None:
+                for tagged_user in tagged_:
+                    checkUser = User.objects.filter(username=str(tagged_user)).exists()
+                    if checkUser:
+                        new_register_2 = Registration(
+                            user=tagged_user,
+                            key=event,
+                            date=form.cleaned_data['date'],
+                        )
+                        new_register_2.save()
+                        count += 1
+            new_register = Registration(
+                user=USERNAME,
+                key=event, 
+                date=form.cleaned_data['date'],
+                tagged=tagged_,
+                )
+            new_register.save()
+            event.volunteers = event.volunteers - (count+1)
+            event.save()
+            return redirect('profile')
+            
+            '''
+            tagged_ = form.cleaned_data['tagged']
+            if tagged_ is not None:
+                for tagged_user in tagged_:
+                    check_user = User.objects.get(username=tagged_user)
+                    if check_user:
+                        new_register_2 = Registration(
+                            user=tagged_user,
+                            key=event,
+                            date=form.cleaned_data['date'],
+                        )
+                        new_register_2.save()
+                        count += 1
+            new_register = Registration(
+                user=username,
+                key=event, 
+                date=form.cleaned_data['date'],
+                tagged=form.cleaned_data['tagged'],
+                )
+            new_register.save()
+            event.volunteers = event.volunteers - (len(count)+1)
+            event.save()
+            return redirect('profile')
+            '''
+        except:
+            raise ValueError('Problems registering user')
+        
     else:
         raise ValueError('There is an error registering you')
     return redirect('profile')
@@ -224,6 +268,8 @@ def markComplete(request, username):
                     user.completed = True
                     user.save()
                     return redirect('profile')
-        else:
-            raise ValueError('This is incorrect')
+                else:
+                    message = 'PIN number entered is incorrect. Please try again.'
+                    context = {'message':message}
+                    return render(request, 'app1/profile.html', context)
     return render(request, 'app1/index.html')
